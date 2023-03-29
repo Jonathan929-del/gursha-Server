@@ -23,7 +23,7 @@ router.post('/register', async (req, res) => {
         }else{
             const existingUser = await User.findOne({username});
             if(existingUser){
-                res.status(400).json('Username is taken.');
+                res.status(400).json({username:'Username is taken.'});
             }else{
 
                 // Saving user
