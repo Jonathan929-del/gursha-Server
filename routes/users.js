@@ -20,29 +20,27 @@ router.post('/register', async (req, res) => {
         const existingUser = await User.findOne({username});
         const {errors, valid} = validatRegisterInput(username, email, password, confirmPassword);
         if(!valid){
+            if(existingUser){
+                errors.username = 'Username is taken.';
+            }
             res.status(400).json(errors);
         }else{
-            if(existingUser){
-                errors.username = 'Username is taken.'
-                res.status(400).json(errors);
-            }else{
 
-                // Saving user
-                const hashedPassword = bcrypt.hashSync(password);
-                const newUser = await User.create({
-                    username,
-                    email,
-                    password:hashedPassword,
-                    createdAt:new Date().toISOString()
-                });
+            // Saving user
+            const hashedPassword = bcrypt.hashSync(password);
+            const newUser = await User.create({
+                username,
+                email,
+                password:hashedPassword,
+                createdAt:new Date().toISOString()
+            });
 
-                // Generating token
-                const token = signToken(newUser);
-                res.status(200).json({
-                    ...newUser._doc,
-                    token
-                });
-            };
+            // Generating token
+            const token = signToken(newUser);
+            res.status(200).json({
+                ...newUser._doc,
+                token
+            });
         };
 
 
