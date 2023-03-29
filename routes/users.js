@@ -19,10 +19,10 @@ router.post('/register', async (req, res) => {
         const {username, email, password, confirmPassword} = req.body;
         const existingUser = await User.findOne({username});
         const {errors, valid} = validatRegisterInput(username, email, password, confirmPassword);
-        if(!valid){
+        if(!valid || existingUser){
             if(existingUser){
                 errors.username = 'Username is taken.';
-            }
+            };
             res.status(400).json(errors);
         }else{
 
