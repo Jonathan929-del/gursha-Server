@@ -19,7 +19,8 @@ export const validatRegisterInput = (
     }
     if(password === ''){
         errors.password = "Password can't be empty."
-    }else if(password !== confirmPassword){
+    }
+    if(password !== confirmPassword){
         errors.confirmPassword = "Passwords don't match."
     }
 
