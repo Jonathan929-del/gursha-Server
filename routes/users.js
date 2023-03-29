@@ -23,7 +23,7 @@ router.post('/register', async (req, res) => {
             res.status(400).json(errors);
         }else{
             if(existingUser){
-                errors.username = 'Username is taken'
+                errors.username = 'Username is taken.'
                 res.status(400).json(errors);
             }else{
 
