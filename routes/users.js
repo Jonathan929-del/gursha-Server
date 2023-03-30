@@ -61,12 +61,12 @@ router.post('/login', async (req, res) => {
         // Validating
         const {username, password} = req.body;
         const {errors, valid} = validateLoginInput(username, password);
-        if(!valid){
-            res.status(400).json(errors);
-        };
         const user = await User.findOne({username});
-        if(!user){
-            res.status(404).json('User not found.');
+        if(!valid){
+            if(!user){
+                errors.user = 'User not found.';
+            }
+            res.status(400).json(errors);
         };
 
 
