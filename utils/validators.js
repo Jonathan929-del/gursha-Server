@@ -18,10 +18,10 @@ export const validatRegisterInput = (
         }
     }
     if(password === ''){
-        errors.password = "Password can't be empty."
+        errors.password = "Password can't be empty.";
     }
     if(password !== confirmPassword){
-        errors.confirmPassword = "Passwords don't match."
+        errors.confirmPassword = "Passwords don't match.";
     }
 
     return {
@@ -37,12 +37,12 @@ export const validatRegisterInput = (
 // Validate login input
 export const validateLoginInput = (username, password) => {
     const errors = {};
-    if(username === ''){
+    if(username.trim() === ''){
         errors.username = "Username can't be empty.";
-    }
+    };
     if(password === ''){
         errors.password = "Password can't be empty.";
-    }
+    };
 
     return {
         errors,
