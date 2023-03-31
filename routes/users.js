@@ -62,6 +62,7 @@ router.post('/login', async (req, res) => {
         const {username, password} = req.body;
         const {errors, valid} = validateLoginInput(username, password);
         const user = await User.findOne({username});
+        const match = bcrypt.compareSync(password, user.password);
         if(!valid){
             res.status(400).json(errors);
         };
@@ -69,7 +70,7 @@ router.post('/login', async (req, res) => {
             errors.username = 'User not found.';
             res.status(400).json(errors);
         };
-        if(!bcrypt.compareSync(user.password !== password)){
+        if(!match){
             errors.password = 'Wrong credentials.';
             res.status(400).json(errors);
         }
