@@ -63,11 +63,16 @@ router.post('/login', async (req, res) => {
         const {errors, valid} = validateLoginInput(username, password);
         const user = await User.findOne({username});
         if(!valid){
-            if(!user){
-                errors.username = 'User not found.';
-            }
             res.status(400).json(errors);
         };
+        if(!user){
+            errors.username = 'User not found.';
+            res.status(400).json(errors);
+        };
+        if(!bcrypt.compareSync(user.password !== password)){
+            errors.password = 'Wrong credentials.';
+            res.status(400).json(errors);
+        }
 
 
         // Generating token
