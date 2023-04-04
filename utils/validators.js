@@ -49,3 +49,19 @@ export const validateLoginInput = (username, password) => {
         valid:Object.keys(errors).length < 1
     }
 };
+
+
+
+
+
+// Validate post input
+export const validatePostInput = video => {
+    const errors = {};
+    if(video.trim() === ''){
+        errors.video = 'No video provided.'
+    };
+    return {
+        errors,
+        valid:Object.keys(errors) < 1
+    }
+};

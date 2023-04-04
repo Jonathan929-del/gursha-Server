@@ -6,13 +6,13 @@ import jwt from 'jsonwebtoken';
 
 
 // Check token functions
-const check = context => {
-    const authHeader = context.req.headers.authorization;
+const checkAuth = req => {
+    const authHeader = req.headers.authorization;
     if(authHeader){
       const token = authHeader.split(' ')[1];
       if (token) {
         try {
-          const user = jwt.verify(token, 'secretjwtkey');
+          const user = jwt.verify(token, process.env.SECRET_JWT_KEY);
           return user;
         } catch (err) {
           throw new Error('Invalid/Expired token.');
@@ -28,4 +28,4 @@ const check = context => {
 
 
 // Export
-export default check;
+export default checkAuth;

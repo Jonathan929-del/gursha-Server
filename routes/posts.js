@@ -1,18 +1,33 @@
 // Imports
 import express from 'express';
 import Post from '../models/Post.js';
+import checkAuth from '../utils/checkAuth.js';
+import {validatePostInput} from '../utils/validators.js';
 const router = express.Router();
 
 
 
 
 
-// Register user
+// Create post
 router.post('/', async (req, res) => {
     try {
-        const {username, email, password, confirmPassword} = req.body;
+        const {body, video} = req.body;
+        const user = checkAuth(req);
+        const {errors, valid} = validatePostInput(video);
+        if(!valid){
+            res.status(400).json(errors);
+        };
+        const post = await Post.create({
+            body,
+            video,
+            user:user.id,
+            username:user.username,
+            createdAt:new Date().toISOString()
+        });
+        res.status(200).json(post);
     } catch (err) {
-        res.status(500).json(err);
+        res.status(500).json(err.message);
     }
 });
 
