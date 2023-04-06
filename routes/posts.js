@@ -35,5 +35,19 @@ router.post('/', async (req, res) => {
 
 
 
+// Fetch feed posts
+router.get('/', async (req, res) => {
+    try {
+        const posts = await Post.find();
+        res.status(200).json(posts);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+});
+
+
+
+
+
 // Export
 export default router;
