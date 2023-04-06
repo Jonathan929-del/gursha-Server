@@ -16,7 +16,7 @@ router.post('/register', async (req, res) => {
 
 
         // Validating
-        const {username, email, password, confirmPassword} = req.body;
+        const {username, email, password, confirmPassword, bio} = req.body;
         const existingUser = await User.findOne({username});
         const {errors, valid} = validatRegisterInput(username, email, password, confirmPassword);
         if(!valid || existingUser){
@@ -32,6 +32,12 @@ router.post('/register', async (req, res) => {
                 username,
                 email,
                 password:hashedPassword,
+                bio,
+                followers:[],
+                following:[],
+                follwersCount:0,
+                follwingCount:0,
+                likesCount:0,
                 createdAt:new Date().toISOString()
             });
 
