@@ -23,6 +23,10 @@ router.post('/', async (req, res) => {
             video,
             user:user.id,
             username:user.username,
+            likesCount:0,
+            commentsCount:0,
+            favouritesCount:0,
+            sharessCount:0,
             createdAt:new Date().toISOString()
         });
         res.status(200).json(post);
