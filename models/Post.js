@@ -13,17 +13,19 @@ const postSchema = new mongoose.Schema({
     likesCount:Number,
     commentsCount:Number,
     favouritesCount:Number,
-    sharessCount:Number,
+    sharesCount:Number,
     createdAt:String,
     user:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'users'
     },
     likes:[{
+        id:String,
         username:String,
         createdAt:String
     }],
     comments:[{
+        id:String,
         body:String,
         username:String,
         createdAt:String
