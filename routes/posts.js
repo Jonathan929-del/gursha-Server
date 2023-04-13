@@ -64,16 +64,24 @@ router.put('/like/:id', async (req, res) => {
         const user = await User.findById(userId);
         const ids = post.likes.map(like => like.id);
         if(ids.includes(userId)){
-            await Post.updateOne({$pull:{likes:{
+            await post.updateOne({$pull:{likes:{
                 id:userId
             }}, likesCount:post.likesCount - 1});
             res.status(200).json('Post unliked.');
         }else{
-            await Post.updateOne({$push:{likes:{
-                id:userId,
-                username:user.username,
-                createdAt:new Date().toISOString()
-            }}, likesCount:post.likesCount + 1});
+            await post.updateOne(
+                {
+                    $push:
+                        {
+                            likes:{
+                                id:userId,
+                                username:user.username,
+                                createdAt:new Date().toISOString()
+                            }
+                        },
+                        likesCount:post.likesCount + 1
+                }
+            );
             res.status(200).json('Post liked.');
         };
     } catch (err) {
