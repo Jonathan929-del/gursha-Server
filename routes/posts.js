@@ -93,5 +93,31 @@ router.put('/like/:id', async (req, res) => {
 
 
 
+// Comment on post
+router.put('/comment/:postId', async (req, res) => {
+    try {
+        const {postId} = req.params;
+        const {body, userId} = req.body;
+        const user = await User.findById(userId);
+        const post = await Post.findById(postId);
+
+        await post.updateOne({$push:{
+            comments:{
+                id:user._id,
+                username:user.username,
+                body,
+                createdAt:new Date().toISOString()
+            }
+        }});
+        res.status(200).json('Comment posted.');
+    } catch (err) {
+        res.status(500).json(err);
+    }
+});
+
+
+
+
+
 // Export
 export default router;
