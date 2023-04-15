@@ -108,7 +108,9 @@ router.put('/comment/:postId', async (req, res) => {
                 body,
                 createdAt:new Date().toISOString()
             }
-        }});
+        },
+        commentsCount:post.commentsCount + 1
+    });
         res.status(200).json('Comment posted.');
     } catch (err) {
         res.status(500).json(err);
