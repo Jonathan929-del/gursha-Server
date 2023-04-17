@@ -33,6 +33,7 @@ router.post('/register', async (req, res) => {
                 email,
                 password:hashedPassword,
                 bio:'',
+                profilePic:'',
                 followers:[],
                 following:[],
                 follwersCount:0,
