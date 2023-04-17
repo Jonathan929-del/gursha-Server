@@ -16,7 +16,7 @@ router.post('/register', async (req, res) => {
 
 
         // Validating
-        const {username, email, password, confirmPassword, bio} = req.body;
+        const {username, email, password, confirmPassword} = req.body;
         const existingUser = await User.findOne({username});
         const {errors, valid} = validatRegisterInput(username, email, password, confirmPassword);
         if(!valid || existingUser){
@@ -32,7 +32,7 @@ router.post('/register', async (req, res) => {
                 username,
                 email,
                 password:hashedPassword,
-                bio,
+                bio:'',
                 followers:[],
                 following:[],
                 follwersCount:0,
@@ -91,6 +91,22 @@ router.post('/login', async (req, res) => {
         });
 
 
+    } catch (err) {
+        res.status(500).json(err);
+    }
+});
+
+
+
+
+
+
+// User info
+router.put('/info', async (req, res) => {
+    try {
+        const {userId, bio, profilePic} = req.body;
+        const user = await User.findByIdAndUpdate(userId, {bio, profilePic}, {new:true});
+        res.status(200).json(user);
     } catch (err) {
         res.status(500).json(err);
     }
