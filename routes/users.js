@@ -117,5 +117,20 @@ router.put('/info', async (req, res) => {
 
 
 
+// Getting user by id
+router.get('/', async (req, res) => {
+    try {
+        const {id} = req.body;
+        const user = await User.findById(id);
+        res.status(200).json(user);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+});
+
+
+
+
+
 // Export
 export default router;
