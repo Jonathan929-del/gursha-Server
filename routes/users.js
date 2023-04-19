@@ -10,6 +10,21 @@ const router = express.Router();
 
 
 
+// Getting user by id
+router.get('/:username', async (req, res) => {
+    try {
+        const username = req.params.username;
+        const user = await User.findOne({username});
+        res.status(200).json(user);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+});
+
+
+
+
+
 // Register user
 router.post('/register', async (req, res) => {
     try {
@@ -107,21 +122,6 @@ router.put('/info', async (req, res) => {
     try {
         const {userId, bio, profilePic} = req.body;
         const user = await User.findByIdAndUpdate(userId, {bio, profilePic}, {new:true});
-        res.status(200).json(user);
-    } catch (err) {
-        res.status(500).json(err);
-    }
-});
-
-
-
-
-
-// Getting user by id
-router.get('/', async (req, res) => {
-    try {
-        const {id} = req.body;
-        const user = await User.findById(id);
         res.status(200).json(user);
     } catch (err) {
         res.status(500).json(err);

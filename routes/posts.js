@@ -1,6 +1,5 @@
 // Imports
 import express from 'express';
-import mongoose from 'mongoose';
 import Post from '../models/Post.js';
 import User from '../models/User.js';
 import checkAuth from '../utils/checkAuth.js';
