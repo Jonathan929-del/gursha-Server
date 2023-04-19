@@ -51,8 +51,8 @@ router.post('/register', async (req, res) => {
                 profilePic:'',
                 followers:[],
                 following:[],
-                follwersCount:0,
-                follwingCount:0,
+                followersCount:0,
+                followingCount:0,
                 likesCount:0,
                 createdAt:new Date().toISOString()
             });

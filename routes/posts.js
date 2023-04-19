@@ -120,5 +120,20 @@ router.put('/comment/:postId', async (req, res) => {
 
 
 
+// Fetch user posts
+router.get('/:userId', async (req, res) => {
+    try {
+        const {userId} = req.params;
+        const posts = await Post.find({user:userId});
+        res.status(200).json(posts);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+});
+
+
+
+
+
 // Export
 export default router;

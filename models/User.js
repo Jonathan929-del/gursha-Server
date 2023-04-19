@@ -14,8 +14,8 @@ const userSchema = new mongoose.Schema({
     profilePic:String,
     followers:[String],
     following:[String],
-    follwersCount:Number,
-    follwingCount:Number,
+    followersCount:Number,
+    followingCount:Number,
     likesCount:Number,
     createdAt:String
 });
