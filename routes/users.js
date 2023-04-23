@@ -132,5 +132,31 @@ router.put('/info', async (req, res) => {
 
 
 
+// Follow / Unfollow user
+router.put('/follow/:followingId', async (req, res) => {
+    try {
+        const {followerId} = req.body;
+        const {followingId} = req.params;
+        const followingUser = await User.findById(followingId);
+        const follower = await User.findById(followerId);
+        if(followingUser.followers.includes(followerId)){
+            await followingUser.updateOne({$pull:{followers:followerId}});
+            await follower.updateOne({$pull:{following:followingId}});
+            res.json('User unfollowed.');
+        }else{
+            await followingUser.updateOne({$push:{followers:followerId}});
+            await follower.updateOne({$push:{following:followingId}});
+            res.json('User followed.');
+        };
+        // res.json(followingUser.followers.includes(followerId));
+    } catch (err) {
+        res.status(500).json(err);
+    }
+});
+
+
+
+
+
 // Export
 export default router;
