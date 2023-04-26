@@ -148,7 +148,6 @@ router.put('/follow/:followingId', async (req, res) => {
             await follower.updateOne({$push:{following:followingId}});
             res.json('User followed.');
         };
-        // res.json(followingUser.followers.includes(followerId));
     } catch (err) {
         res.status(500).json(err);
     }

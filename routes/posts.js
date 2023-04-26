@@ -43,7 +43,7 @@ router.post('/', async (req, res) => {
 // Fetch feed posts
 router.get('/', async (req, res) => {
     try {
-        const posts = await Post.find();
+        const posts = await Post.find().sort({createdAt:-1});
         res.status(200).json(posts);
     } catch (err) {
         res.status(500).json(err);
@@ -125,6 +125,28 @@ router.get('/:userId', async (req, res) => {
     try {
         const {userId} = req.params;
         const posts = await Post.find({user:userId});
+        res.status(200).json(posts);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+});
+
+
+
+
+
+// Fetch users followings videos
+router.get('/following/:id', async (req, res) => {
+    try {
+        const {id} = req.params;
+        const user = await User.findById(id);
+        const userFollowings = user.following;
+        const posts = await Promise.all(
+            userFollowings.map(userId => {                    
+                const posts = Post.find({user:userId}).sort({createdAt:-1});
+                return(posts);
+            })
+        );
         res.status(200).json(posts);
     } catch (err) {
         res.status(500).json(err);
