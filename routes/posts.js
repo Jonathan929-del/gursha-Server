@@ -143,11 +143,13 @@ router.get('/following/:id', async (req, res) => {
         const userFollowings = user.following;
         const posts = await Promise.all(
             userFollowings.map(userId => {                    
-                const posts = Post.find({user:userId}).sort({createdAt:-1});
+                const posts = Post.find({user:userId});
                 return(posts);
             })
         );
-        res.status(200).json(posts);
+        const filteredPosts = [];
+        posts.forEach(user => user.map(post => filteredPosts.push(post)));
+        res.status(200).json(filteredPosts);
     } catch (err) {
         res.status(500).json(err);
     }
