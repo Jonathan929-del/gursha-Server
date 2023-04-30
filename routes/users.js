@@ -118,7 +118,7 @@ router.post('/login', async (req, res) => {
 
 
 // User info
-router.put('/info', async (req, res) => {
+router.put('/update', async (req, res) => {
     try {
         const {userId, bio, profilePic} = req.body;
         const user = await User.findByIdAndUpdate(userId, {bio, profilePic}, {new:true});
