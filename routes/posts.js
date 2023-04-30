@@ -26,8 +26,6 @@ router.post('/', async (req, res) => {
             username:user.username,
             likesCount:0,
             commentsCount:0,
-            favouritesCount:0,
-            sharesCount:0,
             createdAt:new Date().toISOString()
         });
         res.status(200).json(post);
@@ -124,7 +122,7 @@ router.put('/comment/:postId', async (req, res) => {
 router.get('/:userId', async (req, res) => {
     try {
         const {userId} = req.params;
-        const posts = await Post.find({user:userId});
+        const posts = await Post.find({user:userId}).sort({createdAt:-1});
         res.status(200).json(posts);
     } catch (err) {
         res.status(500).json(err);

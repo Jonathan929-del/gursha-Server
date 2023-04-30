@@ -12,8 +12,6 @@ const postSchema = new mongoose.Schema({
     body:String,
     likesCount:Number,
     commentsCount:Number,
-    favouritesCount:Number,
-    sharesCount:Number,
     createdAt:String,
     user:{
         type:mongoose.Schema.Types.ObjectId,
