@@ -8,6 +8,7 @@ import bodyParser from 'body-parser';
 
 import usersRouter from './routes/users.js';
 import postsRouter from './routes/posts.js';
+import chatsRouter from './routes/chat.js';
 
 
 
@@ -29,9 +30,7 @@ app.use(bodyParser.urlencoded({extended:false}));
 // Routes
 app.use('/users', usersRouter);
 app.use('/posts', postsRouter);
-app.get('/', async (req, res) => {
-    res.json('text');
-});
+app.use('/chats', chatsRouter);
 
 
 

@@ -7,21 +7,21 @@ export const validatRegisterInput = (
 ) => {
     const errors = {};
     if(username.trim() === ''){
-        errors.username = "Username can't be empty.";
+        errors.username = "Username can't be empty";
     }
     if(email.trim() === ''){
-        errors.email = "Email can't be empty.";
+        errors.email = "Email can't be empty";
     }else{
         const regEx = /^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,9})$/;
         if(!email.match(regEx)){
-            errors.email = 'Email is invalid.';
+            errors.email = 'Email is invalid';
         }
     }
     if(password === ''){
-        errors.password = "Password can't be empty.";
+        errors.password = "Password can't be empty";
     }
     if(password !== confirmPassword){
-        errors.confirmPassword = "Passwords don't match.";
+        errors.confirmPassword = "Passwords don't match";
     }
 
     return {
@@ -38,10 +38,10 @@ export const validatRegisterInput = (
 export const validateLoginInput = (username, password) => {
     const errors = {};
     if(username.trim() === ''){
-        errors.username = "Username can't be empty.";
+        errors.username = "Username can't be empty";
     };
     if(password === ''){
-        errors.password = "Password can't be empty.";
+        errors.password = "Password can't be empty";
     };
 
     return {
@@ -58,7 +58,7 @@ export const validateLoginInput = (username, password) => {
 export const validatePostInput = video => {
     const errors = {};
     if(video.trim() === ''){
-        errors.video = 'No video provided.'
+        errors.video = 'No video provided'
     };
     return {
         errors,

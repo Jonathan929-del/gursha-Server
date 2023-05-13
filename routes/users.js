@@ -10,7 +10,7 @@ const router = express.Router();
 
 
 
-// Getting user by id
+// Getting user by username
 router.get('/:username', async (req, res) => {
     try {
         const username = req.params.username;
@@ -32,11 +32,15 @@ router.post('/register', async (req, res) => {
 
         // Validating
         const {username, email, password, confirmPassword} = req.body;
-        const existingUser = await User.findOne({username});
+        const existingUserName = await User.findOne({username});
+        const existingUserEmail = await User.findOne({email});
         const {errors, valid} = validatRegisterInput(username, email, password, confirmPassword);
-        if(!valid || existingUser){
-            if(existingUser){
-                errors.username = 'Username is taken.';
+        if(!valid || existingUserName || existingUserEmail){
+            if(existingUserName){
+                errors.username = 'Username is taken';
+            };
+            if(existingUserEmail){
+                errors.email = 'Email is taken';
             };
             res.status(400).json(errors);
         }else{
@@ -88,12 +92,12 @@ router.post('/login', async (req, res) => {
             res.status(400).json(errors);
         };
         if(!user){
-            errors.username = 'User not found.';
+            errors.username = 'User not found';
             res.status(400).json(errors);
         }else{
             const match = bcrypt.compareSync(password, user.password);
             if(!match){
-                errors.password = 'Wrong credentials.';
+                errors.password = 'Wrong credentials';
                 res.status(400).json(errors);
             };
         };
@@ -142,11 +146,11 @@ router.put('/follow/:followingId', async (req, res) => {
         if(followingUser.followers.includes(followerId)){
             await followingUser.updateOne({$pull:{followers:followerId}});
             await follower.updateOne({$pull:{following:followingId}});
-            res.json('User unfollowed.');
+            res.json('User unfollowed');
         }else{
             await followingUser.updateOne({$push:{followers:followerId}});
             await follower.updateOne({$push:{following:followingId}});
-            res.json('User followed.');
+            res.json('User followed');
         };
     } catch (err) {
         res.status(500).json(err);
