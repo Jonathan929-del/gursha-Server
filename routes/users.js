@@ -124,16 +124,25 @@ router.post('/login', async (req, res) => {
 // User info
 router.put('/update', async (req, res) => {
     try {
-        const {userId, bio, profilePic, username} = req.body;
+        const {previousUsername, bio, profilePic, username} = req.body;
         const existingUser = await User.findOne({username});
+        if(username === ''){
+            res.status(403).json('Username cannot be empty');
+        };
+        if(previousUsername === username){
+            await User.updateOne({username}, {bio, profilePic});
+            const returnUser = await User.findOne({username});
+            res.status(200).json(returnUser);
+        };
         if(existingUser){
             res.status(403).json('Username is taken');
         }
-        const user = await User.findByIdAndUpdate(userId, {bio, profilePic, username}, {new:true});
-        res.status(200).json(user);
+        await User.updateOne({username:previousUsername}, {username, bio, profilePic}, {new:true});
+        const returnUser = await User.findOne({username});
+        res.status(200).json(returnUser);
     } catch (err) {
         res.status(500).json(err);
-    }
+    };
 });
 
 
