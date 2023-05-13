@@ -94,7 +94,7 @@ router.put('/like/:id', async (req, res) => {
 router.put('/comment/:postId', async (req, res) => {
     try {
         const {postId} = req.params;
-        const {body, userId} = req.body;
+        const {body, userId, profilePic} = req.body;
         const user = await User.findById(userId);
         const post = await Post.findById(postId);
 
@@ -103,6 +103,7 @@ router.put('/comment/:postId', async (req, res) => {
                 id:user._id,
                 username:user.username,
                 body,
+                profilePic,
                 createdAt:new Date().toISOString()
             }
         },

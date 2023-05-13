@@ -26,6 +26,7 @@ const postSchema = new mongoose.Schema({
         id:String,
         body:String,
         username:String,
+        profilePic:String,
         createdAt:String
     }]
 });
