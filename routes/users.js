@@ -124,8 +124,12 @@ router.post('/login', async (req, res) => {
 // User info
 router.put('/update', async (req, res) => {
     try {
-        const {userId, bio, profilePic} = req.body;
-        const user = await User.findByIdAndUpdate(userId, {bio, profilePic}, {new:true});
+        const {userId, bio, profilePic, username} = req.body;
+        const existingUser = await User.findOne({username});
+        if(existingUser){
+            res.status(403).json('Username is taken');
+        }
+        const user = await User.findByIdAndUpdate(userId, {bio, profilePic, username}, {new:true});
         res.status(200).json(user);
     } catch (err) {
         res.status(500).json(err);
