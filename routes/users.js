@@ -157,12 +157,12 @@ router.put('/follow/:followingId', async (req, res) => {
         const followingUser = await User.findById(followingId);
         const follower = await User.findById(followerId);
         if(followingUser.followers.includes(followerId)){
-            await followingUser.updateOne({$pull:{followers:followerId}});
-            await follower.updateOne({$pull:{following:followingId}});
+            await followingUser.updateOne({$pull:{followers:followerId}, followersCount:followingUser.followersCount - 1});
+            await follower.updateOne({$pull:{following:followingId}, followingCount:follower.followingCount - 1});
             res.json('User unfollowed');
         }else{
-            await followingUser.updateOne({$push:{followers:followerId}});
-            await follower.updateOne({$push:{following:followingId}});
+            await followingUser.updateOne({$push:{followers:followerId}, followersCount:followingUser.followersCount + 1});
+            await follower.updateOne({$push:{following:followingId}, followingCount:follower.followingCount + 1});
             res.json('User followed');
         };
     } catch (err) {
