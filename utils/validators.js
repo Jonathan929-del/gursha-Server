@@ -20,6 +20,9 @@ export const validatRegisterInput = (
     if(password === ''){
         errors.password = "Password can't be empty";
     }
+    if(password.length < 6){
+        errors.password = "Password must contain 6 characters at least";
+    }
     if(password !== confirmPassword){
         errors.confirmPassword = "Passwords don't match";
     }
