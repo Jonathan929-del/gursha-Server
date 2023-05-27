@@ -174,5 +174,47 @@ router.put('/follow/:followingId', async (req, res) => {
 
 
 
+// Fetching user's following
+router.get('/following/:id', async (req, res) => {
+    try {
+        const userId = req.params.id;
+        const user = await User.findById(userId);
+        const followings = user.following;
+        const users = await Promise.all(followings.map(id => {
+            const theUsers = User.find({_id:id});
+            return theUsers;
+        }))
+        const filteredUsers = users.map(user => user[0]);
+        res.status(200).json(filteredUsers);
+    } catch (err) {
+        res.status(500).json(err.message);
+    }
+});
+
+
+
+
+
+// Fetching user's followers
+router.get('/followers/:id', async (req, res) => {
+    try {
+        const userId = req.params.id;
+        const user = await User.findById(userId);
+        const followers = user.followers;
+        const users = await Promise.all(followers.map(id => {
+            const theUsers = User.find({_id:id});
+            return theUsers;
+        }))
+        const filteredUsers = users.map(user => user[0]);
+        res.status(200).json(filteredUsers);
+    } catch (err) {
+        res.status(500).json(err.message);
+    }
+});
+
+
+
+
+
 // Export
 export default router;
