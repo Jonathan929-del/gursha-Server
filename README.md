@@ -1,0 +1,1 @@
+This is a server app created using NodeJs, ExpressJs, and MongoDB. For an app called "Gursha", and it's a titktok clone app. Providing many featues like videos uploading using AWS S3 bucket, and firebase for live chat feature, a profile page to see your uploaded videos.
